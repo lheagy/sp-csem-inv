@@ -30,27 +30,8 @@ jobs:
       with:
         auto-update-conda: true
         environment-file: .github/environment_ci.yml
-        activate-environment: geoana-test
+        activate-environment: sp-csem-inv-test
         python-version: ${{ matrix.python-version }}
-
-    - name: Install numba
-      if: matrix.python-version != '3.13'
-      # Numba doesn't work on python 3.13 just yet:
-      run: |
-        conda install --yes -c conda-forge numba
-
-      # Install discretize from it's repo until wheels/conda-forge built against numpy2.0 available:
-    - name: Pull Discretize
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        repository: 'simpeg/discretize'
-        ref: 'main'
-        path: 'discretize'
-
-    - name: Install discretize
-      run: |
-        pip install ./discretize
 
     - name: Conda information
       run: |
@@ -64,11 +45,4 @@ jobs:
 
     - name: Run Tests
       run: |
-        pytest tests --cov-config=.coveragerc --cov=geoana --cov-report=xml -s -v -W ignore::DeprecationWarning
-
-    - name: "Upload coverage to Codecov"
-      if: matrix.python-version == '3.11'
-      uses: codecov/codecov-action@v4
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        fail_ci_if_error: true
+        pytest tests -s -v -W ignore::DeprecationWarning
