@@ -213,6 +213,21 @@ def test_sensitivities():
     discretize.tests.check_derivative(fun, x0, num=3)
 
 
+def test_adjoint():
+    active_cells, sim = generate_simulation()
+
+    x0 = np.log(1e-5 + 1e-7 * np.random.randn(np.sum(active_cells)))
+
+    v = np.random.randn(x0.shape)
+    w = np.random.randn(sim.survey.nD)
+
+    wTJv = w.T @ sim.Jvec(x0, v)
+    vTJTw = v.T @ sim.Jvec(x0, w)
+
+    assert np.allclose(wTJv, vTJTw)
+
+
 if __name__ == "__main__":
     test_forward()
     test_sensitivities()
+    test_adjoint()
