@@ -41,7 +41,6 @@ class JspSource(BaseFDEMSrc):
                 * MeL
                 * self._pore_pressure_gradient
             )
-        # simulation.Me * self._s_e
         else:
             raise NotImplementedError
 
@@ -54,14 +53,6 @@ class JspSource(BaseFDEMSrc):
             return (
                 -1 / (self._density_water * self._gravity_acceleration) * MeLDeriv * v
             )
-            # elif adjoint is True:
-            #     MeLDerivT = simulation.MeCoupling_coefficientDeriv(v, adjoint=True)
-            #     return (
-            #         - 1/(self._density_water * self._gravity_acceleration) *
-            #         MeLDerivT * self._pore_pressure_gradient
-            #     )
-
-        # simulation.Me * self._s_e
         else:
             raise NotImplementedError
 

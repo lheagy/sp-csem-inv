@@ -218,11 +218,11 @@ def test_adjoint():
 
     x0 = np.log(1e-5 + 1e-7 * np.random.randn(np.sum(active_cells)))
 
-    v = np.random.randn(x0.shape)
+    v = np.random.randn(len(x0))
     w = np.random.randn(sim.survey.nD)
 
     wTJv = w.T @ sim.Jvec(x0, v)
-    vTJTw = v.T @ sim.Jvec(x0, w)
+    vTJTw = v.T @ sim.Jtvec(x0, w)
 
     assert np.allclose(wTJv, vTJTw)
 
