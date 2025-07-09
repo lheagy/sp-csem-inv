@@ -8,7 +8,7 @@ dependencies:
   - scipy>=1.8
   - harmonica
   - pymatsolver>=0.3
-  # - simpeg
+  - simpeg
   - discretize
   - matplotlib
   - libdlf
