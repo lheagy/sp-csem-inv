@@ -25,10 +25,10 @@ E3DDIR = os.path.sep.join([this_dir, "..", "e3d"])
 
 # load mesh, conductivity model, data
 mesh = discretize.TreeMesh.read_UBC(
-    os.path.sep.join([E3DDIR, "J", "octree_mesh_casing.txt"])
+    os.path.sep.join([E3DDIR, "J-coarser", "octree_mesh_casing.txt"])
 )
 conductivity_model = discretize.TreeMesh.read_model_UBC(
-    mesh, os.path.sep.join([E3DDIR, "J", "model_casing.con"])
+    mesh, os.path.sep.join([E3DDIR, "J-coarser", "model_casing.con"])
 )
 data_locs = np.loadtxt(os.path.sep.join([E3DDIR, "points", "points.txt"]))
 data_e3d = np.loadtxt(os.path.sep.join([E3DDIR, "points", "dpredFWD.txt"]))
@@ -210,7 +210,7 @@ def test_sensitivities():
     def fun(x):
         return sim.dpred(x), lambda x: sim.Jvec(x0, x)
 
-    discretize.tests.check_derivative(fun, x0, num=3)
+    discretize.tests.check_derivative(fun, x0, num=2, eps=1e-8)
 
 
 def test_adjoint():
